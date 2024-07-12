@@ -6,6 +6,7 @@ const { findUserByEmail } = require('../../Helper/Utils')
 const { Sendmail } = require('../../Services/Nodemail')
 const dotenv = require("dotenv")
 dotenv.config()
+const isProduction = process.env.NODE_ENV === 'production';
 // const { GetUserIdFromCookie, GetEmployerIdFromCookie } = require('../Helper/getUserId');
 async function SignUP(req, res) {
     const { firstName, email, password, } = req.body
@@ -74,13 +75,13 @@ async function SignIn(req, res) {
         if (updatedUser) {
             res.cookie('token', accessToken, {
                 httpOnly: true,
-                Secure: true, // Uncomment this if using HTTPS
+                secure: isProduction, // Uncomment this if using HTTPS
                 SameSite: 'None', // Uncomment this if using cross-site cookies
             });
 
             res.cookie('refresh-token', refershToken, {
                 httpOnly: true,
-                Secure: true, // Uncomment this if using HTTPS
+                secure: isProduction,// Uncomment this if using HTTPS
                 SameSite: 'None', // Uncomment this if using cross-site cookies
             });
 
