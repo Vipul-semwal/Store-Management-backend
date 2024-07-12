@@ -63,26 +63,20 @@ async function SignIn(req, res) {
     }
 
     const accessToken = jwt.sign({ userId: curretnUser._id }, process.env.ACCESS_TOKEN_SECRET,);
-    const refershToken = jwt.sign({ refreshToken: curretnUser._id }, process.env.REFRESH_TOKEN_SECRET);
+    const refreshToken = jwt.sign({ refreshToken: curretnUser._id }, process.env.REFRESH_TOKEN_SECRET);
 
-    const cookieOptions = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'None' //
-    }
     try {
         const updatedUser = await user.findOneAndUpdate(
             { _id: curretnUser._id },
-            { $set: { refershToken: refershToken } },
+            { $set: { refershToken: refreshToken } },
             { new: true }
         );
 
         if (updatedUser) {
-            res.cookie('token', accessToken, cookieOptions);
+            req.session.token = accessToken;
+            req.session.refreshToken = refreshToken;
 
-            res.cookie('refresh-token', refershToken, cookieOptions);
-
-            return res.status(200).json({ message: 'Successfully logged in', token: accessToken, refreshToken: refershToken, success: true });
+            return res.status(200).json({ message: 'Successfully logged in', success: true });
         }
 
     } catch (error) {
