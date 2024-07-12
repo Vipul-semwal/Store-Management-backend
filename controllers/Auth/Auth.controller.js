@@ -5,7 +5,7 @@ const { default: mongoose } = require('mongoose');
 const { findUserByEmail } = require('../../Helper/Utils')
 const { Sendmail } = require('../../Services/Nodemail')
 const dotenv = require("dotenv")
-const { isSameSiteNoneCompatible } = require('should-send-same-site-none');
+const shouldSendSameSiteNone = require('should-send-same-site-none');
 dotenv.config()
 const isProduction = process.env.NODE_ENV === 'production';
 // const { GetUserIdFromCookie, GetEmployerIdFromCookie } = require('../Helper/getUserId');
