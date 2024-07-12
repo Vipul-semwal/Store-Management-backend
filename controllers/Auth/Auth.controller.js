@@ -72,7 +72,7 @@ async function SignIn(req, res) {
 
     }
     if (shouldSendSameSiteNone(req.headers['user-agent'])) {
-        cookieOptions.sameSite = 'None';
+        cookieOptions.SameSite = 'None';
     }
     try {
         const updatedUser = await user.findOneAndUpdate(
