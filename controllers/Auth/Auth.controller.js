@@ -7,6 +7,7 @@ const { Sendmail } = require('../../Services/Nodemail')
 const dotenv = require("dotenv")
 dotenv.config()
 const isProduction = process.env.NODE_ENV === 'production';
+const shouldSendSameSiteNone = require('should-send-same-site-none');
 // const { GetUserIdFromCookie, GetEmployerIdFromCookie } = require('../Helper/getUserId');
 async function SignUP(req, res) {
     const { firstName, email, password, } = req.body
@@ -65,6 +66,14 @@ async function SignIn(req, res) {
     const accessToken = jwt.sign({ userId: curretnUser._id }, process.env.ACCESS_TOKEN_SECRET,);
     const refershToken = jwt.sign({ refreshToken: curretnUser._id }, process.env.REFRESH_TOKEN_SECRET);
 
+    const cookieOptions = {
+        httpOnly: true,
+        secure: isProduction, // Only sent over HTTPS in production
+
+    }
+    if (shouldSendSameSiteNone(req.headers['user-agent'])) {
+        cookieOptions.sameSite = 'None';
+    }
     try {
         const updatedUser = await user.findOneAndUpdate(
             { _id: curretnUser._id },
@@ -73,17 +82,9 @@ async function SignIn(req, res) {
         );
 
         if (updatedUser) {
-            res.cookie('token', accessToken, {
-                httpOnly: true,
-                secure: isProduction, // Only sent over HTTPS in production
-                SameSite: "None",
-            });
+            res.cookie('token', accessToken, cookieOptions);
 
-            res.cookie('refresh-token', refershToken, {
-                httpOnly: true,
-                secure: isProduction, // Only sent over HTTPS in production
-                SameSite: "None",  // Allows cross-site cookies
-            });
+            res.cookie('refresh-token', refershToken, cookieOptions);
 
             return res.status(200).json({ message: 'Successfully logged in', token: accessToken, refreshToken: refershToken, success: true });
         }
