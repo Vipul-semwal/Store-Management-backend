@@ -69,7 +69,7 @@ async function SignIn(req, res) {
     const cookieOptions = {
         httpOnly: true,
         secure: isProduction, // Only sent over HTTPS in production
-        SameSite: 'None'
+        // ameSite: 'None'
 
     }
     try {
