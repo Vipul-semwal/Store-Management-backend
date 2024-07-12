@@ -76,13 +76,13 @@ async function SignIn(req, res) {
             res.cookie('token', accessToken, {
                 httpOnly: true,
                 secure: isProduction, // Only sent over HTTPS in production
-                sameSite: 'None',
+                sameSite: "none",
             });
 
             res.cookie('refresh-token', refershToken, {
                 httpOnly: true,
                 secure: isProduction, // Only sent over HTTPS in production
-                sameSite: 'None',  // Allows cross-site cookies
+                sameSite: "none",  // Allows cross-site cookies
             });
 
             return res.status(200).json({ message: 'Successfully logged in', token: accessToken, refreshToken: refershToken, success: true });
