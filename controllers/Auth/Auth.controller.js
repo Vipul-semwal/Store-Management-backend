@@ -75,13 +75,13 @@ async function SignIn(req, res) {
         if (updatedUser) {
             res.cookie('token', accessToken, {
                 httpOnly: true,
-                secure: isProduction, // Uncomment this if using HTTPS
+                secure: true, // Uncomment this if using HTTPS
                 SameSite: 'None', // Uncomment this if using cross-site cookies
             });
 
             res.cookie('refresh-token', refershToken, {
                 httpOnly: true,
-                secure: isProduction,// Uncomment this if using HTTPS
+                secure: true,// Uncomment this if using HTTPS
                 SameSite: 'None', // Uncomment this if using cross-site cookies
             });
 
