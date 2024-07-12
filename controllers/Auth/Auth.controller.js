@@ -66,9 +66,9 @@ async function SignIn(req, res) {
     const refershToken = jwt.sign({ refreshToken: curretnUser._id }, process.env.REFRESH_TOKEN_SECRET);
 
     const cookieOptions = {
-        httpOnly: process.env.NODE_ENV !== 'production',
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        SameSite: 'None'
+        sameSite: 'None' //
     }
     try {
         const updatedUser = await user.findOneAndUpdate(
