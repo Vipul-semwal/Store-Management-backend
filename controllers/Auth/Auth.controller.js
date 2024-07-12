@@ -68,9 +68,8 @@ async function SignIn(req, res) {
 
     const cookieOptions = {
         httpOnly: true,
-        secure: isProduction, // Only sent over HTTPS in production
-        // ameSite: 'None'
-
+        secure: isProduction,
+        SameSite: 'None'
     }
     try {
         const updatedUser = await user.findOneAndUpdate(
