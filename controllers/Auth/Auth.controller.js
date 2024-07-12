@@ -74,14 +74,14 @@ async function SignIn(req, res) {
         if (updatedUser) {
             res.cookie('token', accessToken, {
                 httpOnly: true,
-                // Secure: true, // Uncomment this if using HTTPS
-                // SameSite: 'None', // Uncomment this if using cross-site cookies
+                secure: true,
+                sameSite: 'None',
             });
 
             res.cookie('refresh-token', refershToken, {
                 httpOnly: true,
-                // Secure: true, // Uncomment this if using HTTPS
-                // SameSite: 'None', // Uncomment this if using cross-site cookies
+                secure: true,
+                sameSite: 'None',
             });
 
             return res.status(200).json({ message: 'Successfully logged in', token: accessToken, refreshToken: refershToken, success: true });
