@@ -45,6 +45,7 @@ async function SignUP(req, res) {
 }
 
 async function SignIn(req, res) {
+    console.log('sss', process.env.NODE_ENV === 'production')
     const { email, password } = req.body;
     const curretnUser = await user.findOne({ email });
 
