@@ -76,14 +76,14 @@ async function SignIn(req, res) {
             res.cookie('token', accessToken, {
                 httpOnly: true,
                 secure: isProduction, // Only sent over HTTPS in production
-                SameSite: 'None', // Allows cross-site cookies
+                SameSite: 'Lax', // Allows cross-site cookies
                 overwrite: true,
             });
 
             res.cookie('refresh-token', refershToken, {
                 httpOnly: true,
                 secure: isProduction, // Only sent over HTTPS in production
-                SameSite: 'None', // Allows cross-site cookies
+                SameSite: 'Lax', // Allows cross-site cookies
                 overwrite: true,
             });
 
