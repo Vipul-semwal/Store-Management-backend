@@ -66,7 +66,7 @@ async function SignIn(req, res) {
     const refershToken = jwt.sign({ refreshToken: curretnUser._id }, process.env.REFRESH_TOKEN_SECRET);
 
     const cookieOptions = {
-        httpOnly: true,
+        httpOnly: process.env.NODE_ENV !== 'production',
         secure: process.env.NODE_ENV === 'production',
         SameSite: 'None'
     }
