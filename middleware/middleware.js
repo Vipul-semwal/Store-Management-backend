@@ -1,7 +1,7 @@
 const { GetUserIdFromCookie } = require('../Helper/Utils')
 
 const getUserIdFromCookie = (req, res, next) => {
-    console.log("dekhoo", req.body)
+    console.log("dekhoo", req.cookies)
     const userId = GetUserIdFromCookie(req.cookies.token);
     if (!userId) {
         return res.status(401).json({ message: 'Unauthorized request, please sign-in again', success: false });
