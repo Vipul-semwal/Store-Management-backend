@@ -4,6 +4,7 @@ const user = require('../../Models/User/User.model')
 const { default: mongoose } = require('mongoose');
 const { findUserByEmail } = require('../../Helper/Utils')
 const { Sendmail } = require('../../Services/Nodemail')
+const { GetUserIdFromCookie } = require('../../Helper/Utils')
 const dotenv = require("dotenv")
 dotenv.config()
 // const { GetUserIdFromCookie, GetEmployerIdFromCookie } = require('../Helper/getUserId');
@@ -186,28 +187,20 @@ async function verifyUser(req, res) {
 }
 
 async function VerifyAuthentication(req, res) {
-    console.log("token agay bhai", req.cookies.token);
-    const employeeId = GetUserIdFromCookie(req.cookies.token)
+    const employeeId = GetUserIdFromCookie(req.session.token)
     console.log(employeeId)
     if (!employeeId) {
-        return res.status(401).json({ message: 'Unauthorized request' })
+        return res.status(401).json({ message: 'Unauthorized request please sign-in', success: false });
     }
+    return res.status(200).json({ message: 'verified', success: true })
 
     try {
-        const user = await employeeIntialdata.findById(employeeId);
-        console.log(user.ProfileCompleate)
-        if (user) {
-            return res.status(200).json({ ProfileCompleateness: user.ProfileCompleate })
-        }
-        else {
-            return res.status(404)
-        }
+
     } catch (error) {
-        console.log(error)
+        console.log("while authenticating user", error)
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }
-
 
 
 

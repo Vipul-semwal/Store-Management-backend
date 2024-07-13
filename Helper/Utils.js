@@ -31,7 +31,6 @@ function GetUserIdFromCookie(cookie) {
         const decodedToken = jwt.verify(cookie, process.env.ACCESS_TOKEN_SECRET);
         console.log('ho ch=uka veiry', decodedToken)
 
-
         const userId = decodedToken.userId;
 
         return userId

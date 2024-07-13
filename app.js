@@ -35,7 +35,7 @@ app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'None'
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : ''
 }));
 
 app.use('/', indexRouter);

@@ -14,6 +14,7 @@ router.post('/sign-up', SignUP);
 router.post('/sign-in', SignIn);
 router.get('/logout', logout);
 router.get('/verify/:id', verifyUser)
+router.get('/auth-check', VerifyAuthentication)
 
 
 // creating and updating
